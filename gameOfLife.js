@@ -1,4 +1,4 @@
-let oldGrid, drawGrid, cellWidth, cellHeight;
+let oldGrid, drawGrid, cellWidth, cellHeight, maxAge=0;
 function setup(){
 
     drawGrid = (grid) => {
@@ -27,7 +27,12 @@ function setup(){
             for(let j=0; j<rows; j++){
                 //gives live or dead status for cell.
                 const isLive = floor(random(2)) ? true : false;
-                colVector.push({ isLive });
+                const age = isLive ? 1 : 0;
+                const cell = {
+                    isLive,
+                    age
+                };
+                colVector.push(cell);
             }
             initGrid.push(colVector);
         }
@@ -39,8 +44,8 @@ function setup(){
     const canvasSide = innerWidth <= innerHeight ? innerWidth : innerHeight; 
     createCanvas(canvasSide,canvasSide);
     background(0);
-    oldGrid = makeNewGrid(20,20);
-    frameRate(30);
+    oldGrid = makeNewGrid(25,25);
+    frameRate(10);
 }
 
 //returns new grid (2d Array) based on the old grid provided as parameter by following the rules mentioned.
@@ -59,9 +64,11 @@ function newGenerationOf(grid) {
         numOfRows = grid[i].length;
         for(let j=0; j<numOfRows; j++){
             let neighbourCount = 0;
-            const newCell = {};
+            const newCell = {
+                age: 0
+            };
             //here i is index along horizontal (i.e. col index) and j is index along vertical (i.e. row index).
-            const cell = grid[i][j];
+            const oldCell = grid[i][j];
             for(let k=-1; k<2; k++){
                 for(let l=-1; l<2; l++){
                     if(!(k===0 && l===0)) {
@@ -70,15 +77,37 @@ function newGenerationOf(grid) {
                         if(neighbourCell.isLive) {
                             neighbourCount ++;
                         }    
-                    }
+                    } 
                 }    
             }
             //applying above mentioned rules.
-            if(cell.isLive) {
+            if(oldCell.isLive) {
                 newCell.isLive = !(neighbourCount < 2 || neighbourCount > 3);
+
+                // when both new generation cell and old generation cell are alive,
+                // it means the old cell has continued living, hence age increments of old cell.
+                if(newCell.isLive) {
+                    newCell.age = oldCell.age + 1;
+                } else{
+                    //as new cell is not live although old one was live means reset the age.
+                    newCell.age = 0;
+                }
             } else {
                 newCell.isLive = (neighbourCount === 3);
+                if(newCell.isLive){
+                    //dead cell comes to life! so age set to 1.
+                    newCell.age = 1;
+                }
+                // for dead cell remaining dead age remains 0.
             }
+            //prints the max age of a cell of the system.
+            // const maxAgeComparator = currentAge => {
+            //     if(currentAge>maxAge){
+            //         maxAge = currentAge;
+            //         console.log("max age: "+maxAge);
+            //     }
+            // };
+            // maxAgeComparator(newCell.age);
             colVector.push(newCell);
         }
         newGrid.push(colVector);
