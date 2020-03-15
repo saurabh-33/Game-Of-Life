@@ -1,13 +1,34 @@
 let oldGrid, drawGrid, cellWidth, cellHeight, maxAge=0;
 function setup(){
-
+    colorMode(HSB, 360, 100, 100, 1);
     drawGrid = (grid) => {
         grid.forEach((colVector, colIndex) => {
             colVector.forEach((cell, rowIndex) => {
+                const { age } = cell;
                 if(cell.isLive){
-                    fill(255);
+                    // adding color of cell according to the age:
+                    // age = 0 --> black    
+                    // 0 < age <= 2 --> white
+                    // 0 < age <= 5 --> gray
+                    // 0 < age <= 10 --> light blue
+                    // 10 < age <= 50 --> light green
+                    // 50 < age <= 100 --> light yellow
+                    // age > 100 --> light red
+                    if(age<=2){
+                        fill(360, 0, 100);
+                    } else if(age<=5) {
+                        fill(360, 0, 80);
+                    } else if(age<=10) {
+                        fill(190, 80, 100);                        
+                    } else if(age<=50) {
+                        fill(120, 80, 100);
+                    } else if(age<=100) {
+                        fill(60, 80, 100);
+                    } else {
+                        fill(0, 80, 100);
+                    }
                 } else {
-                    fill(0);
+                    fill(0, 0, 0, 1);
                 }
                 rect(colIndex * cellWidth, rowIndex * cellHeight, cellWidth, cellHeight);
             });
