@@ -1,4 +1,4 @@
-let oldGrid, drawGrid, cellWidth, cellHeight, maxAge=0;
+let oldGrid, drawGrid, cellWidth, cellHeight;
 function setup(){
     colorMode(HSB, 360, 100, 100, 1);
     drawGrid = (grid) => {
@@ -33,6 +33,7 @@ function setup(){
                 rect(colIndex * cellWidth, rowIndex * cellHeight, cellWidth, cellHeight);
             });
         });
+        
     }
 
     // Makes a new grid (2d array) for the first time.
@@ -121,14 +122,7 @@ function newGenerationOf(grid) {
                 }
                 // for dead cell remaining dead age remains 0.
             }
-            //prints the max age of a cell of the system.
-            // const maxAgeComparator = currentAge => {
-            //     if(currentAge>maxAge){
-            //         maxAge = currentAge;
-            //         console.log("max age: "+maxAge);
-            //     }
-            // };
-            // maxAgeComparator(newCell.age);
+
             colVector.push(newCell);
         }
         newGrid.push(colVector);
