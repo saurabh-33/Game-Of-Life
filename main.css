@@ -87,3 +87,30 @@ th, td {
     min-width: 60px;
     margin: 5px 0;
 }
+
+@media(max-width: 768px) {
+
+    body {
+        flex-direction: column;
+    }
+    
+
+    #canvas-container {
+        width: 100%;
+        height: 70%;
+    }
+
+    #info-controls-container {
+        flex-direction: row;
+        width: 100%;
+        height: 30%;
+    }
+
+    #info-container, #controls-container {
+        width: 50%;
+        height: 100%;
+        overflow: auto;
+        border: 2px solid black;
+    }
+
+}
