@@ -62,9 +62,13 @@ function setup(){
         return initGrid;
     }
 
-    //Assigns one of the least dimentions of window as the canvas's side.
-    const canvasSide = innerWidth <= innerHeight ? innerWidth : innerHeight; 
-    createCanvas(canvasSide,canvasSide);
+    const canvasContainerDiv = document.getElementById("canvas-container");
+
+    //Assigns one of the least dimention of canvas-container div as the canvas's side.
+    const canvasSide = canvasContainerDiv.offsetWidth <= canvasContainerDiv.offsetHeight ? canvasContainerDiv.offsetWidth : canvasContainerDiv.offsetHeight;
+
+    //creating canvas and putting it inside the canvas-container div.
+    createCanvas(canvasSide,canvasSide).parent(canvasContainerDiv);
     background(0);
     oldGrid = makeNewGrid(25,25);
     frameRate(10);
@@ -130,11 +134,10 @@ function newGenerationOf(grid) {
     return newGrid;
 }
 
-function draw() {
-    
-    //creates new gen based on passed grid following rules.
-    clear();
-    let newGrid = newGenerationOf(oldGrid);
-    drawGrid(newGrid)
-    oldGrid = newGrid;
-}
+// function draw() {
+//     //creates new gen based on passed grid following rules.
+//     clear();
+//     let newGrid = newGenerationOf(oldGrid);
+//     drawGrid(newGrid)
+//     oldGrid = newGrid;
+// }
