@@ -1,6 +1,16 @@
 let oldGrid, drawGrid, makeNewGrid, cellWidth, cellHeight, isLooping = false;
 const gridRows = 25, gridCols = 25;
 
+const ageColors = [
+    [360, 0, 100],
+    [360, 0, 80],
+    [190, 80, 80],
+    [120, 80, 80],
+    [60, 80, 80],
+    [0, 80, 80],
+    [0, 0, 0]
+];
+
 function setup(){
     colorMode(HSB, 360, 100, 100, 1);
     drawGrid = (grid) => {
@@ -17,20 +27,20 @@ function setup(){
                     // 50 < age <= 100 --> light yellow
                     // age > 100 --> light red
                     if(age<=2){
-                        fill(360, 0, 100);
+                        fill(...ageColors[0]);
                     } else if(age<=5) {
-                        fill(360, 0, 80);
+                        fill(...ageColors[1]);
                     } else if(age<=10) {
-                        fill(190, 80, 100);                        
+                        fill(...ageColors[2]);                        
                     } else if(age<=50) {
-                        fill(120, 80, 100);
+                        fill(...ageColors[3]);
                     } else if(age<=100) {
-                        fill(60, 80, 100);
+                        fill(...ageColors[4]);
                     } else {
-                        fill(0, 80, 100);
+                        fill(...ageColors[5]);
                     }
                 } else {
-                    fill(0, 0, 0, 1);
+                    fill(...ageColors[6]);
                 }
                 rect(colIndex * cellWidth, rowIndex * cellHeight, cellWidth, cellHeight);
             });
@@ -70,6 +80,7 @@ function setup(){
 
     //creating canvas and putting it inside the canvas-container div.
     createCanvas(canvasSide,canvasSide).parent(canvasContainerDiv);
+
     background(0);
     oldGrid = makeNewGrid(gridRows,gridCols);
     drawGrid(oldGrid);
