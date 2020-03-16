@@ -149,7 +149,6 @@ function newGenerationOf(grid) {
 }
 
 function draw() {
-    console.log("entering draw func")
     //creates new gen based on passed grid following rules.
     clear();
     let newGrid = newGenerationOf(oldGrid);

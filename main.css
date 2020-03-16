@@ -44,6 +44,10 @@ body {
     border: 2px solid black;
 }
 
+#controls-container {
+    flex-direction: column;
+}
+
 /* styles for the info table*/
 table {
     border-collapse: collapse;
@@ -62,6 +66,10 @@ th, td {
     border: 1px solid saddlebrown;
 }
 
+#rules {
+    margin: 5px 0;
+}
+
 /*styles for controls panels*/
 .controls-wrapper {
     display: flex;
@@ -70,6 +78,7 @@ th, td {
     align-items: center;
     width: 90%;
     height: 90%;
+    margin: 5px;
     border: 1px solid #d1d1d1;
     border-radius: 10px;
 }
