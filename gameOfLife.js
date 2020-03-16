@@ -1,4 +1,6 @@
-let oldGrid, drawGrid, cellWidth, cellHeight;
+let oldGrid, drawGrid, makeNewGrid, cellWidth, cellHeight, isLooping = false;
+const gridRows = 25, gridCols = 25;
+
 function setup(){
     colorMode(HSB, 360, 100, 100, 1);
     drawGrid = (grid) => {
@@ -39,7 +41,7 @@ function setup(){
     // Makes a new grid (2d array) for the first time.
     // args passed dictates the no. of cells needed in vertically and horizontally respectively.
     // All cells' width and height auto adjusts to fit the dimentions of the canvas.
-    function makeNewGrid(rows, cols) {
+    makeNewGrid = (rows, cols) => {
         cellWidth = (width/cols);
         cellHeight = (height/rows);
         const initGrid = [];
@@ -58,7 +60,6 @@ function setup(){
             }
             initGrid.push(colVector);
         }
-        drawGrid(initGrid);
         return initGrid;
     }
 
@@ -70,8 +71,10 @@ function setup(){
     //creating canvas and putting it inside the canvas-container div.
     createCanvas(canvasSide,canvasSide).parent(canvasContainerDiv);
     background(0);
-    oldGrid = makeNewGrid(25,25);
+    oldGrid = makeNewGrid(gridRows,gridCols);
+    drawGrid(oldGrid);
     frameRate(10);
+    noLoop();
 }
 
 //returns new grid (2d Array) based on the old grid provided as parameter by following the rules mentioned.
@@ -134,10 +137,11 @@ function newGenerationOf(grid) {
     return newGrid;
 }
 
-// function draw() {
-//     //creates new gen based on passed grid following rules.
-//     clear();
-//     let newGrid = newGenerationOf(oldGrid);
-//     drawGrid(newGrid)
-//     oldGrid = newGrid;
-// }
+function draw() {
+    console.log("entering draw func")
+    //creates new gen based on passed grid following rules.
+    clear();
+    let newGrid = newGenerationOf(oldGrid);
+    drawGrid(newGrid)
+    oldGrid = newGrid;
+}
